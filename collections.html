@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - Casa Marco Museum</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Casa Marco Museum</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="exhibitions.html">Exhibitions</a></li>
+                <li><a href="collections.html" class="active">Collections</a></li>
+                <li><a href="visit.html">Visit</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Collections</h1>
+            <p>Browse through our extensive collection of artifacts and artworks</p>
+        </div>
+    </section>
+
+    <!-- Collection Filters -->
+    <section class="collection-filters">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <button class="filter-btn" data-filter="paintings">Paintings</button>
+                <button class="filter-btn" data-filter="sculptures">Sculptures</button>
+                <button class="filter-btn" data-filter="artifacts">Artifacts</button>
+                <button class="filter-btn" data-filter="manuscripts">Manuscripts</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="collectionSearch" placeholder="Search collections...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Grid -->
+    <section class="collections-grid-section">
+        <div class="container">
+            <div class="collections-grid" id="collectionsGrid">
+                <!-- Painting Items -->
+                <div class="collection-item" data-category="paintings">
+                    <div class="collection-item-image" style="background-color: #8B7355;">
+                        <span class="collection-tag">Painting</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>The Starry Night</h3>
+                        <p class="artist">Vincent van Gogh</p>
+                        <p class="year">1889</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="paintings">
+                    <div class="collection-item-image" style="background-color: #4A5568;">
+                        <span class="collection-tag">Painting</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Mona Lisa</h3>
+                        <p class="artist">Leonardo da Vinci</p>
+                        <p class="year">1503-1519</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="paintings">
+                    <div class="collection-item-image" style="background-color: #6B8E23;">
+                        <span class="collection-tag">Painting</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Water Lilies</h3>
+                        <p class="artist">Claude Monet</p>
+                        <p class="year">1916</p>
+                    </div>
+                </div>
+
+                <!-- Sculpture Items -->
+                <div class="collection-item" data-category="sculptures">
+                    <div class="collection-item-image" style="background-color: #D3D3D3;">
+                        <span class="collection-tag">Sculpture</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>David</h3>
+                        <p class="artist">Michelangelo</p>
+                        <p class="year">1501-1504</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="sculptures">
+                    <div class="collection-item-image" style="background-color: #BC8F8F;">
+                        <span class="collection-tag">Sculpture</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>The Thinker</h3>
+                        <p class="artist">Auguste Rodin</p>
+                        <p class="year">1904</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="sculptures">
+                    <div class="collection-item-image" style="background-color: #F5DEB3;">
+                        <span class="collection-tag">Sculpture</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Venus de Milo</h3>
+                        <p class="artist">Alexandros of Antioch</p>
+                        <p class="year">150-125 BC</p>
+                    </div>
+                </div>
+
+                <!-- Artifact Items -->
+                <div class="collection-item" data-category="artifacts">
+                    <div class="collection-item-image" style="background-color: #DAA520;">
+                        <span class="collection-tag">Artifact</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>King Tutankhamun's Mask</h3>
+                        <p class="artist">Ancient Egypt</p>
+                        <p class="year">1323 BC</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="artifacts">
+                    <div class="collection-item-image" style="background-color: #8B4513;">
+                        <span class="collection-tag">Artifact</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Roman Amphora</h3>
+                        <p class="artist">Ancient Rome</p>
+                        <p class="year">100-200 AD</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="artifacts">
+                    <div class="collection-item-image" style="background-color: #2F4F4F;">
+                        <span class="collection-tag">Artifact</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Greek Pottery</h3>
+                        <p class="artist">Ancient Greece</p>
+                        <p class="year">500 BC</p>
+                    </div>
+                </div>
+
+                <!-- Manuscript Items -->
+                <div class="collection-item" data-category="manuscripts">
+                    <div class="collection-item-image" style="background-color: #8B7D6B;">
+                        <span class="collection-tag">Manuscript</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Illuminated Gospel</h3>
+                        <p class="artist">Medieval Monks</p>
+                        <p class="year">1200-1250</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="manuscripts">
+                    <div class="collection-item-image" style="background-color: #A0826D;">
+                        <span class="collection-tag">Manuscript</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Codex Atlanticus</h3>
+                        <p class="artist">Leonardo da Vinci</p>
+                        <p class="year">1478-1519</p>
+                    </div>
+                </div>
+
+                <div class="collection-item" data-category="manuscripts">
+                    <div class="collection-item-image" style="background-color: #654321;">
+                        <span class="collection-tag">Manuscript</span>
+                    </div>
+                    <div class="collection-item-info">
+                        <h3>Dead Sea Scrolls</h3>
+                        <p class="artist">Ancient Scribes</p>
+                        <p class="year">300-100 BC</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Casa Marco Museum</h3>
+                    <p>Preserving history, inspiring the future.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="exhibitions.html">Exhibitions</a></li>
+                        <li><a href="collections.html">Collections</a></li>
+                        <li><a href="visit.html">Plan Your Visit</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@casamarco.museum<br>
+                       Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Casa Marco Museum. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
