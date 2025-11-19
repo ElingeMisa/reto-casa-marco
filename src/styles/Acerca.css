@@ -1,0 +1,108 @@
+/* Contenido Acerca de */
+.about-content {
+  padding: 4rem 0;
+}
+
+.about-section {
+  margin-bottom: 4rem;
+}
+
+.about-section h2 {
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.mission-list {
+  list-style: none;
+  margin-left: 0;
+}
+
+.mission-list li {
+  padding-left: 2rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+
+.mission-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.collections-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--white);
+  border-radius: 10px;
+}
+
+.stat-card h3 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.team-member {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--light-bg);
+  border-radius: 10px;
+}
+
+.team-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+}
+
+.team-member h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.3rem;
+}
+
+.team-role {
+  color: var(--secondary-color);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.support-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .support-buttons {
+    flex-direction: column;
+  }
+
+  .support-buttons .btn {
+    width: 100%;
+  }
+}
