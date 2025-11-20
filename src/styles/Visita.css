@@ -126,6 +126,77 @@
   color: var(--accent-color);
 }
 
+.user-balance-info {
+  background-color: #f0f9ff;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.user-balance-info strong {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.login-prompt {
+  background-color: #fff3cd;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #ffc107;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-prompt a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #c33;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+  margin-bottom: 1rem;
+}
+
+.total-section {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.total-section h3 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.insufficient-balance {
+  color: #c33;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
 @media (max-width: 480px) {
   .booking-card {
     padding: 1.5rem;

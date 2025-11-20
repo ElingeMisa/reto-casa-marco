@@ -15,7 +15,13 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "security:audit": "npm audit --production",
     "security:snyk": "snyk test",
-    "security:secrets": "gitleaks detect --source . -v"
+    "security:secrets": "gitleaks detect --source . -v",
+    "backend:start": "cd backend && npm run dev",
+    "backend:prod": "cd backend && npm start",
+    "backend:stop": "lsof -ti:5001 | xargs kill -9 2>/dev/null || echo 'Backend no estaba corriendo'",
+    "frontend:stop": "lsof -ti:3000 | xargs kill -9 2>/dev/null || echo 'Frontend no estaba corriendo'",
+    "stop": "npm run backend:stop && npm run frontend:stop",
+    "restart": "npm run stop && npm run start"
   },
   "dependencies": {
     "@types/node": "^20.10.4",
@@ -26,8 +32,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
-    "react-scripts": "^0.0.0",
-    "typescript": "^4.9.5"
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^3.5.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",

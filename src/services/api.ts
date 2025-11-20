@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 // Configuración de Axios siguiendo las especificaciones de seguridad del PDF
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.museomarco.com';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api/v1';
 
 class ApiService {
   private axiosInstance: AxiosInstance;
@@ -15,9 +15,9 @@ class ApiService {
       },
     });
 
-    // Forzar HTTPS
+    // Forzar HTTPS en producción
     this.axiosInstance.interceptors.request.use((config) => {
-      if (config.url && !config.url.startsWith('https://')) {
+      if (process.env.NODE_ENV === 'production' && config.url && !config.url.startsWith('https://')) {
         console.warn('Advertencia: Se intentó hacer una petición HTTP no segura');
       }
       return config;

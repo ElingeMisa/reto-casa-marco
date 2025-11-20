@@ -1,44 +1,108 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import api from '../services/api';
 import '../styles/Visita.css';
 
+const PRECIOS = {
+  adultos: 15,
+  niños: 0,
+  estudiantes: 10,
+  adultosMayores: 12,
+};
+
 const Visita: React.FC = () => {
+  const navigate = useNavigate();
+  const { usuario, actualizarSaldo } = useAuth();
+
   const [adultos, setAdultos] = useState(1);
   const [niños, setNiños] = useState(0);
   const [estudiantes, setEstudiantes] = useState(0);
   const [adultosMayores, setAdultosMayores] = useState(0);
+  const [fechaEvento, setFechaEvento] = useState('');
+  const [horaEvento, setHoraEvento] = useState('10:00');
   const [total, setTotal] = useState(15);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const precios = {
-    adultos: 15,
-    niños: 0,
-    estudiantes: 10,
-    adultosMayores: 12,
-  };
 
   useEffect(() => {
     const nuevoTotal =
-      adultos * precios.adultos +
-      niños * precios.niños +
-      estudiantes * precios.estudiantes +
-      adultosMayores * precios.adultosMayores;
+      adultos * PRECIOS.adultos +
+      niños * PRECIOS.niños +
+      estudiantes * PRECIOS.estudiantes +
+      adultosMayores * PRECIOS.adultosMayores;
     setTotal(nuevoTotal);
   }, [adultos, niños, estudiantes, adultosMayores]);
 
-  const manejarEnvio = (e: React.FormEvent) => {
+  const manejarCompra = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formulario = e.target as HTMLFormElement;
-    const datos = new FormData(formulario);
+    setError('');
+    setSuccess('');
 
-    alert(`¡Gracias por tu reserva, ${datos.get('nombre')}!\n\nDetalles de la Visita:\nFecha: ${datos.get('fechaVisita')}\nHora: ${datos.get('horaVisita')}\nTotal: $${total.toFixed(2)}\n\nSe enviará un correo de confirmación a: ${datos.get('email')}`);
+    if (!usuario) {
+      setError('Debes iniciar sesión para realizar una compra');
+      setTimeout(() => navigate('/login'), 2000);
+      return;
+    }
 
-    formulario.reset();
-    setAdultos(1);
-    setNiños(0);
-    setEstudiantes(0);
-    setAdultosMayores(0);
+    if (total === 0) {
+      setError('Debes seleccionar al menos un boleto');
+      return;
+    }
+
+    if (usuario.saldo < total) {
+      setError(`Saldo insuficiente. Tu saldo actual es $${usuario.saldo.toFixed(2)}. Necesitas recargar $${(total - usuario.saldo).toFixed(2)} más.`);
+      return;
+    }
+
+    if (!fechaEvento) {
+      setError('Debes seleccionar una fecha para tu visita');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const detalles = {
+        adultos,
+        niños,
+        estudiantes,
+        adultosMayores,
+        fecha: fechaEvento,
+        hora: horaEvento,
+      };
+
+      const response = await api.post<{
+        mensaje: string;
+        orden: any;
+        saldo_actual: number;
+      }>('/ordenes', {
+        tipo_orden: 'evento',
+        total,
+        detalles,
+        fecha_evento: `${fechaEvento}T${horaEvento}:00`,
+      });
+
+      actualizarSaldo(response.saldo_actual);
+      setSuccess(`¡Compra realizada con éxito! Tu nuevo saldo es $${response.saldo_actual.toFixed(2)}`);
+
+      // Reset form
+      setAdultos(1);
+      setNiños(0);
+      setEstudiantes(0);
+      setAdultosMayores(0);
+      setFechaEvento('');
+      setHoraEvento('10:00');
+    } catch (err: any) {
+      const mensaje = err.response?.data?.error || 'Error al realizar la compra';
+      setError(mensaje);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Obtener la fecha de hoy para el mínimo del input date
   const hoy = new Date().toISOString().split('T')[0];
 
   return (
@@ -75,51 +139,49 @@ const Visita: React.FC = () => {
                 <h3>Precios de Admisión</h3>
                 <ul>
                   <li>
-                    <strong>Adultos:</strong> $15
+                    <strong>Adultos:</strong> ${PRECIOS.adultos}
                   </li>
                   <li>
-                    <strong>Adultos Mayores (65+):</strong> $12
+                    <strong>Estudiantes:</strong> ${PRECIOS.estudiantes} (con credencial)
                   </li>
                   <li>
-                    <strong>Estudiantes:</strong> $10
+                    <strong>Adultos Mayores:</strong> ${PRECIOS.adultosMayores}
                   </li>
                   <li>
                     <strong>Niños (menores de 12):</strong> Gratis
-                  </li>
-                  <li>
-                    <strong>Pase Familiar:</strong> $40 (2 adultos + 3 niños)
                   </li>
                 </ul>
               </div>
             </div>
 
-            {/* Ubicación */}
+            {/* Cómo Llegar */}
             <div className="visit-card">
-              <h2>Ubicación y Estacionamiento</h2>
+              <h2>Cómo Llegar</h2>
               <div className="visit-details">
                 <h3>Dirección</h3>
-                <p>
-                  Museo MARCO
-                  <br />
-                  Avenida del Museo 123
-                  <br />
-                  Distrito Cultural
-                  <br />
-                  Ciudad, Estado 12345
-                </p>
+                <p>Av. Zuazua y Calle Jardín, Centro, Monterrey, N.L.</p>
 
                 <h3>Estacionamiento</h3>
-                <ul>
-                  <li>Estacionamiento en el sitio disponible</li>
-                  <li>$5 para visitantes del museo</li>
-                  <li>Espacios de estacionamiento accesibles</li>
-                  <li>Transporte público cercano</li>
-                </ul>
+                <p>Estacionamiento disponible con tarifa especial para visitantes del museo.</p>
 
                 <h3>Transporte Público</h3>
                 <ul>
-                  <li>Rutas de autobús: 12, 45, 67</li>
-                  <li>Metro: Estación Distrito Cultural</li>
+                  <li>Metro Línea 1 y 2 - Estación Zaragoza</li>
+                  <li>Autobús: Rutas que pasan por el Centro</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Normas del Museo */}
+            <div className="visit-card">
+              <h2>Normas del Museo</h2>
+              <div className="visit-details">
+                <ul>
+                  <li>No se permite comida o bebida dentro del museo</li>
+                  <li>Flash fotográfico prohibido</li>
+                  <li>Hablar en voz baja</li>
+                  <li>No tocar las obras de arte</li>
+                  <li>Guardar mochilas grandes en el guardarropa</li>
                 </ul>
               </div>
             </div>
@@ -128,42 +190,11 @@ const Visita: React.FC = () => {
             <div className="visit-card">
               <h2>Accesibilidad</h2>
               <div className="visit-details">
-                <p>
-                  El Museo MARCO está comprometido con ser accesible para todos
-                  los visitantes.
-                </p>
                 <ul>
-                  <li>Entradas y galerías accesibles en silla de ruedas</li>
-                  <li>Elevadores disponibles a todos los pisos</li>
-                  <li>Baños accesibles</li>
-                  <li>Audioguías disponibles</li>
-                  <li>Animales de servicio bienvenidos</li>
-                  <li>Señalización en braille en todo el edificio</li>
-                  <li>Interpretación en ASL disponible (con cita)</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Directrices para Visitantes */}
-            <div className="visit-card">
-              <h2>Directrices para Visitantes</h2>
-              <div className="visit-details">
-                <h3>Por Favor Tener en Cuenta</h3>
-                <ul>
-                  <li>Se permite fotografía (sin flash)</li>
-                  <li>No se permiten alimentos ni bebidas en las galerías</li>
-                  <li>Las bolsas grandes deben dejarse en el guardarropa</li>
-                  <li>Mantener distancia de las obras de arte</li>
-                  <li>Voces bajas en las galerías</li>
-                  <li>Tocar solo exhibiciones interactivas designadas</li>
-                </ul>
-
-                <h3>Servicios</h3>
-                <ul>
-                  <li>Guardarropa disponible</li>
-                  <li>Cafetería del museo</li>
-                  <li>Tienda de regalos</li>
-                  <li>WiFi gratuito</li>
+                  <li>Rampas para sillas de ruedas</li>
+                  <li>Elevadores disponibles</li>
+                  <li>Baños adaptados</li>
+                  <li>Tours accesibles disponibles con reserva</li>
                 </ul>
               </div>
             </div>
@@ -171,105 +202,143 @@ const Visita: React.FC = () => {
         </div>
       </section>
 
-      {/* Sección de Reservas */}
-      <section className="booking-section">
+      {/* Formulario de Reserva */}
+      <section className="booking">
         <div className="container">
-          <div className="booking-card">
-            <h2>Reserva tu Visita</h2>
-            <p>Reserva tus boletos con anticipación para garantizar la entrada</p>
-            <form className="booking-form" onSubmit={manejarEnvio}>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="fechaVisita">Fecha de Visita</label>
-                  <input type="date" id="fechaVisita" name="fechaVisita" min={hoy} required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="horaVisita">Hora Preferida</label>
-                  <select id="horaVisita" name="horaVisita" required>
-                    <option value="">Seleccionar hora</option>
-                    <option value="09:00">9:00 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="13:00">1:00 PM</option>
-                    <option value="15:00">3:00 PM</option>
-                    <option value="17:00">5:00 PM</option>
-                  </select>
-                </div>
-              </div>
+          <h2>Compra tus Boletos</h2>
+          {usuario && (
+            <div className="user-balance-info">
+              <p>Tu saldo actual: <strong>${usuario.saldo.toFixed(2)}</strong></p>
+            </div>
+          )}
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="adultos">Adultos</label>
-                  <input
-                    type="number"
-                    id="adultos"
-                    name="adultos"
-                    min="0"
-                    value={adultos}
-                    onChange={(e) => setAdultos(parseInt(e.target.value) || 0)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="niños">Niños</label>
-                  <input
-                    type="number"
-                    id="niños"
-                    name="niños"
-                    min="0"
-                    value={niños}
-                    onChange={(e) => setNiños(parseInt(e.target.value) || 0)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="estudiantes">Estudiantes</label>
-                  <input
-                    type="number"
-                    id="estudiantes"
-                    name="estudiantes"
-                    min="0"
-                    value={estudiantes}
-                    onChange={(e) => setEstudiantes(parseInt(e.target.value) || 0)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="adultosMayores">Adultos Mayores</label>
-                  <input
-                    type="number"
-                    id="adultosMayores"
-                    name="adultosMayores"
-                    min="0"
-                    value={adultosMayores}
-                    onChange={(e) => setAdultosMayores(parseInt(e.target.value) || 0)}
-                  />
-                </div>
-              </div>
+          {!usuario && (
+            <div className="login-prompt">
+              <p>Debes <a href="/login">iniciar sesión</a> o <a href="/registro">registrarte</a> para comprar boletos</p>
+            </div>
+          )}
 
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="success-message">
+              {success}
+            </div>
+          )}
+
+          <form onSubmit={manejarCompra} className="booking-form">
+            <div className="form-row">
               <div className="form-group">
-                <label htmlFor="email">Correo Electrónico</label>
+                <label htmlFor="fechaEvento">Fecha de Visita *</label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="tu.email@ejemplo.com"
+                  type="date"
+                  id="fechaEvento"
+                  value={fechaEvento}
+                  onChange={(e) => setFechaEvento(e.target.value)}
+                  min={hoy}
                   required
+                  disabled={loading || !usuario}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="nombre">Nombre Completo</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required />
+                <label htmlFor="horaEvento">Hora de Visita *</label>
+                <select
+                  id="horaEvento"
+                  value={horaEvento}
+                  onChange={(e) => setHoraEvento(e.target.value)}
+                  required
+                  disabled={loading || !usuario}
+                >
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="13:00">1:00 PM</option>
+                  <option value="14:00">2:00 PM</option>
+                  <option value="15:00">3:00 PM</option>
+                  <option value="16:00">4:00 PM</option>
+                  <option value="17:00">5:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="adultos">Adultos (${PRECIOS.adultos} c/u)</label>
+                <input
+                  type="number"
+                  id="adultos"
+                  value={adultos}
+                  onChange={(e) => setAdultos(Math.max(0, parseInt(e.target.value) || 0))}
+                  min="0"
+                  disabled={loading || !usuario}
+                />
               </div>
 
-              <div className="total-price">
-                <h3>
-                  Total: <span>${total.toFixed(2)}</span>
-                </h3>
+              <div className="form-group">
+                <label htmlFor="estudiantes">
+                  Estudiantes (${PRECIOS.estudiantes} c/u)
+                </label>
+                <input
+                  type="number"
+                  id="estudiantes"
+                  value={estudiantes}
+                  onChange={(e) => setEstudiantes(Math.max(0, parseInt(e.target.value) || 0))}
+                  min="0"
+                  disabled={loading || !usuario}
+                />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="adultosMayores">
+                  Adultos Mayores (${PRECIOS.adultosMayores} c/u)
+                </label>
+                <input
+                  type="number"
+                  id="adultosMayores"
+                  value={adultosMayores}
+                  onChange={(e) => setAdultosMayores(Math.max(0, parseInt(e.target.value) || 0))}
+                  min="0"
+                  disabled={loading || !usuario}
+                />
               </div>
 
-              <button type="submit" className="btn btn-primary btn-large">
-                Reservar Boletos
-              </button>
-            </form>
-          </div>
+              <div className="form-group">
+                <label htmlFor="niños">Niños (Gratis)</label>
+                <input
+                  type="number"
+                  id="niños"
+                  value={niños}
+                  onChange={(e) => setNiños(Math.max(0, parseInt(e.target.value) || 0))}
+                  min="0"
+                  disabled={loading || !usuario}
+                />
+              </div>
+            </div>
+
+            <div className="total-section">
+              <h3>Total: ${total.toFixed(2)}</h3>
+              {usuario && usuario.saldo < total && (
+                <p className="insufficient-balance">
+                  Saldo insuficiente. Necesitas ${ (total - usuario.saldo).toFixed(2)} más
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={loading || !usuario || (usuario && usuario.saldo < total)}
+            >
+              {loading ? 'Procesando...' : 'Comprar Boletos'}
+            </button>
+          </form>
         </div>
       </section>
     </div>

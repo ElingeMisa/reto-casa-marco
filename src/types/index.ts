@@ -4,9 +4,13 @@ export interface Usuario {
   id: number;
   nombre: string;
   email: string; // cifrado
-  password: string; // hasheado con Argon2
+  password?: string; // hasheado con Argon2 (opcional, no se devuelve del backend)
+  saldo: number;
   rol: 'usuario' | 'administrador' | 'guia';
-  creadoEn: Date;
+  activo?: boolean;
+  ultimo_acceso?: Date;
+  creado_en?: Date;
+  actualizado_en?: Date;
 }
 
 export interface Exposicion {

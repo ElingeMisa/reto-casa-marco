@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/Navbar.css';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { usuario, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -11,6 +14,12 @@ const Navbar: React.FC = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+    navigate('/');
   };
 
   return (
@@ -45,6 +54,32 @@ const Navbar: React.FC = () => {
               Acerca
             </Link>
           </li>
+          {usuario ? (
+            <>
+              <li className="user-info">
+                <span className="user-name">{usuario.nombre}</span>
+                <span className="user-balance">${usuario.saldo.toFixed(2)}</span>
+              </li>
+              <li>
+                <button className="logout-button" onClick={handleLogout}>
+                  Cerrar Sesión
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login" className="nav-link login-link" onClick={closeMenu}>
+                  Iniciar Sesión
+                </Link>
+              </li>
+              <li>
+                <Link to="/registro" className="nav-link register-link" onClick={closeMenu}>
+                  Registrarse
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
         <div
           className={`hamburger ${isMenuOpen ? 'active' : ''}`}
