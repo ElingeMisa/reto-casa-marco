@@ -1,169 +1,260 @@
-# Documentación Técnica - Museo MARCO
+# Museo MARCO - Aplicación Web
 
-Esta carpeta contiene la documentación técnica y de diseño del proyecto.
+Aplicación web interactiva desarrollada en React + TypeScript para el Museo MARCO, enfocada en promover el arte contemporáneo y proporcionar experiencias virtuales accesibles.
 
-## 📚 Contenido
+## 📋 Descripción del Proyecto
 
-### Documentos de Diseño
+Este proyecto es parte del curso TC3002C.101 Ciberseguridad Informática II del Tecnológico de Monterrey. La aplicación busca resolver la disminución de visitantes del Museo MARCO mediante una plataforma digital que permite:
 
-- **[Etapa 1. Requerimientos.pdf](design/Etapa%201.%20Requerimientos.pdf)** - Requerimientos funcionales y no funcionales del sistema
-- **[Etapa 2. Diseño.pdf](design/Etapa%202.%20Diseño.pdf)** - Arquitectura del sistema, diseño de base de datos, y diseño de interfaces
+- Promover exposiciones y eventos actuales del museo
+- Ofrecer recorridos virtuales y experiencias inmersivas
+- Facilitar la compra de boletos, membresías y reservaciones
+- Integrar un espacio educativo con materiales multimedia
+- Crear comunidad mediante interacción digital
 
-## 🏗️ Arquitectura del Sistema
+## 🎯 Características Principales
 
-El sistema está compuesto por tres componentes principales:
+### Páginas Implementadas
 
-### 1. Aplicación Web (React + TypeScript)
-- Frontend SPA desarrollado con React 18
-- Enrutamiento con React Router 6
-- Tipado estático con TypeScript
-- Comunicación segura con API mediante Axios
+- **Inicio**: Sección hero con exposiciones destacadas e información rápida
+- **Exposiciones**: Vista detallada de exposiciones actuales con tours virtuales
+- **Colecciones**: Galería filtrable de artefactos y obras de arte con búsqueda en tiempo real
+- **Visita**: Información sobre horarios, precios, ubicación y sistema de reservas interactivo
+- **Acerca**: Historia del museo, misión, equipo y opciones de apoyo
 
-### 2. Aplicación Intermedia/API (Backend)
-- API RESTful para comunicación entre frontend y base de datos
-- Autenticación mediante JWT
-- Validación y sanitización de datos
-- Logging y auditoría de actividades
+### Funcionalidades Interactivas
 
-### 3. Base de Datos (PostgreSQL)
-- Almacenamiento seguro de datos
-- Cifrado de información sensible
-- Backup automático diario
+- ✅ Navegación responsive con menú hamburguesa móvil
+- ✅ Filtrado de colecciones por categoría (pinturas, esculturas, artefactos, manuscritos)
+- ✅ Búsqueda en tiempo real de colecciones
+- ✅ Sistema modal de tours virtuales
+- ✅ Formulario de reservas con cálculo automático de precios
+- ✅ Diseño totalmente responsive
+- ✅ Animaciones suaves y transiciones
 
-## 🔒 Medidas de Seguridad Implementadas
+## 🔧 Tecnologías Utilizadas
 
-### Autenticación y Autorización
-- JWT (JSON Web Tokens) para sesiones de usuario
-- Tokens de corta duración con refresh tokens
-- Roles y permisos granulares
+### Frontend
+- **React 18.2** - Biblioteca de UI
+- **TypeScript 4.9** - Tipado estático
+- **React Router 6** - Enrutamiento SPA
+- **CSS3** - Estilos modernos con Grid y Flexbox
 
-### Protección de Datos
-- Cifrado de datos en tránsito (HTTPS/TLS)
-- Cifrado de datos en reposo
-- Hashing de contraseñas con Argon2
-- Tokenización de información de pago
+### Seguridad (según especificaciones)
+- **Axios** - Cliente HTTP con interceptores de seguridad
+- **JWT** - Autenticación mediante tokens
+- **HTTPS** - Comunicaciones cifradas
+- Implementación de principios de "Security by Design"
 
-### Prevención de Vulnerabilidades
-- Validación y sanitización de entradas
-- Protección contra inyección SQL mediante queries parametrizadas
-- Protección XSS mediante sanitización de HTML
-- Rate limiting para prevenir ataques de fuerza bruta
-- CORS configurado correctamente
+### Herramientas de Desarrollo
+- **npm/yarn** - Gestión de dependencias
+- **ESLint** - Análisis estático de código
+- **Prettier** - Formateo de código
+- **SonarCloud** - Análisis de calidad (CI/CD)
+- **Snyk** - Escaneo de vulnerabilidades
 
-## 📊 Modelo de Base de Datos
+## 📁 Estructura del Proyecto
 
-Ver diagrama en [Etapa 2. Diseño.pdf](design/Etapa%202.%20Diseño.pdf) para el modelo ER completo.
+```
+reto-casa-marco/
+├── public/
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   └── Footer.tsx
+│   ├── pages/
+│   │   ├── Inicio.tsx
+│   │   ├── Exposiciones.tsx
+│   │   ├── Colecciones.tsx
+│   │   ├── Visita.tsx
+│   │   └── Acerca.tsx
+│   ├── services/
+│   │   └── api.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── styles/
+│   │   ├── index.css
+│   │   ├── App.css
+│   │   └── [component].css
+│   ├── App.tsx
+│   └── index.tsx
+├── docs/
+│   ├── design/
+│   │   ├── Etapa 1. Requerimientos.pdf
+│   │   └── Etapa 2. Diseño.pdf
+│   └── README.md
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
-### Entidades Principales
-- **Usuario** - Información de usuarios del sistema
-- **Exposición** - Exposiciones del museo
-- **Evento** - Eventos y visitas guiadas
-- **Ticket** - Boletos para eventos
-- **Membresía** - Membresías de usuarios
-- **Donación** - Donaciones al museo
-- **Orden/Pago** - Sistema de pagos
+## 🚀 Instalación y Ejecución
 
-## 🎨 Diseño de Interfaces
+### Prerrequisitos
+- Node.js >= 16.0.0
+- npm >= 8.0.0
+- PostgreSQL >= 12
 
-### Principios de Diseño
-- Mobile-first approach
-- Accesibilidad (WCAG 2.1 nivel AA)
-- Diseño responsivo
-- Paleta de colores del museo MARCO
-- Tipografía legible y moderna
+### Instalación
 
-### Páginas Principales
-1. **Inicio** - Landing page con exposiciones destacadas
-2. **Exposiciones** - Catálogo de exposiciones con tours virtuales
-3. **Colecciones** - Galería filtrable de obras
-4. **Visita** - Información práctica y sistema de reservas
-5. **Acerca** - Historia y misión del museo
-
-## 🔄 Flujos de Usuario
-
-### Flujo de Reserva
-1. Usuario selecciona fecha y hora
-2. Selecciona tipo y número de boletos
-3. Proporciona información de contacto
-4. Revisa el total
-5. Confirma reserva
-6. Recibe confirmación por email
-
-### Flujo de Navegación
-1. Usuario accede al sitio
-2. Navega por las secciones mediante menú
-3. Filtra/busca contenido de interés
-4. Accede a detalles específicos
-5. Realiza acciones (reservar, donar, etc.)
-
-## 🧪 Pruebas
-
-### Tipos de Pruebas
-- **Unitarias** - Componentes y funciones individuales
-- **Integración** - Interacción entre componentes
-- **E2E** - Flujos completos de usuario
-- **Seguridad** - Penetration testing y análisis de vulnerabilidades
-
-### Cobertura Mínima
-- 80% de cobertura de código (exigido por CI/CD)
-- 100% de casos de uso críticos cubiertos
-
-## 📈 Pipeline CI/CD
-
-### Etapas del Pipeline
-1. **Análisis estático** - SonarCloud
-2. **Pruebas** - Jest + React Testing Library
-3. **Escaneo de dependencias** - npm audit + Snyk
-4. **Detección de secretos** - GitLeaks
-5. **Build** - Construcción optimizada
-6. **Despliegue** - Automático a staging/producción
-
-## 📖 Guías de Desarrollo
-
-### Configuración del Entorno
 ```bash
-# Instalar dependencias
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/reto-casa-marco.git
+
+# Navegar al directorio
+cd reto-casa-marco
+
+# Instalar dependencias del frontend
 npm install
 
-# Configurar variables de entorno
-cp .env.example .env
+# Instalar dependencias del backend
+cd backend
+npm install
+cd ..
+```
 
-# Iniciar en desarrollo
+### Configuración de la Base de Datos
+
+```bash
+# Crear la base de datos
+psql postgres -c "CREATE DATABASE museo_marco;"
+
+# Configurar el backend (ver GUIA_INICIO.md para detalles)
+cd backend
+cp .env.example .env
+# Editar .env con tus credenciales
+npm run db:setup
+npm run db:seed
+cd ..
+```
+
+### Ejecución en Desarrollo
+
+**Opción 1: Inicio Automático (Recomendado)**
+```bash
+# Inicia backend + frontend automáticamente
+npm run dev
+
+# Este comando:
+# 1. Inicia el backend en puerto 5001
+# 2. Verifica que esté funcionando
+# 3. Inicia el frontend en puerto 3000
+# 4. Muestra logs en tiempo real
+```
+
+**Opción 2: Inicio Manual**
+```bash
+# Terminal 1 - Backend
+npm run backend:start
+
+# Terminal 2 - Frontend
 npm start
 ```
 
-### Convenciones de Código
-- Seguir guía de estilo de TypeScript
-- Usar ESLint y Prettier
-- Commits convencionales (Conventional Commits)
-- Nombres de variables en español para el dominio
-- Nombres técnicos en inglés
+### Detener Servicios
 
-### Git Workflow
-- Main branch protegida
-- Feature branches desde main
-- Pull requests con revisión de código
-- CI/CD debe pasar antes de merge
+```bash
+# Detener todo (backend + frontend)
+npm run stop
 
-## 🚀 Despliegue
+# Detener solo el backend
+npm run backend:stop
 
-### Ambientes
-- **Desarrollo** - Local
-- **Staging** - Pre-producción
-- **Producción** - Ambiente productivo
+# Detener solo el frontend
+npm run frontend:stop
+```
 
-### Proceso de Despliegue
-1. Merge a main activa el pipeline
-2. Tests y análisis de seguridad
-3. Build automático
-4. Despliegue a staging
-5. Verificación manual
-6. Despliegue a producción
+### Construcción para Producción
 
-## 📞 Contacto
+```bash
+# Crear build optimizado del frontend
+npm run build
 
-Para consultas sobre la documentación técnica, contactar al equipo de desarrollo.
+# El build estará en la carpeta /build
+
+# Iniciar backend en producción
+npm run backend:prod
+```
+
+### Scripts Disponibles
+
+```bash
+npm start          # Inicia servidor de desarrollo
+npm test          # Ejecuta pruebas con cobertura
+npm run build     # Construye para producción
+npm run lint      # Ejecuta ESLint
+npm run format    # Formatea código con Prettier
+npm run security:audit  # Auditoría de seguridad
+```
+
+## 🔒 Seguridad
+
+El proyecto implementa los siguientes principios de seguridad:
+
+### Security by Design
+- Cifrado de datos sensibles en tránsito y en reposo
+- Autenticación mediante tokens JWT seguros
+- Validación de todas las solicitudes API
+- Protección contra inyección SQL y XSS
+- Implementación de HTTPS obligatorio
+
+### Pipeline CI/CD
+- Análisis estático con SonarCloud (cobertura mínima 80%)
+- Escaneo de dependencias con npm audit y Snyk
+- Detección de secretos con GitLeaks
+- Escaneo de contenedores Docker con Trivy
+- Bloqueo automático de integraciones con vulnerabilidades críticas
+
+### Gestión de Secretos
+- Uso de variables de entorno (.env)
+- .gitignore estricto para evitar commits de credenciales
+- Almacenamiento seguro con AWS Secrets Manager o HashiCorp Vault
+
+## 👥 Equipo
+
+**Integrantes:**
+- Axel Ariel Grande Ruiz (A01611811)
+- Carlos Eugenio Saldaña Tijerina (A01285600)
+- Humberto Jasso Silva (A01771184)
+- Isaac Hernández Pérez (A01198674)
+- Víctor Misael Escalante Alvarado (A01741176)
+
+**Profesor:** Luis Alberto Terrazas
+
+**Materia:** TC3002C.101 Ciberseguridad Informática II
+
+## 📄 Documentación Adicional
+
+Para más detalles sobre requerimientos y diseño, consultar:
+- [docs/design/Etapa 1. Requerimientos.pdf](docs/design/Etapa%201.%20Requerimientos.pdf)
+- [docs/design/Etapa 2. Diseño.pdf](docs/design/Etapa%202.%20Diseño.pdf)
+
+## 🌐 Compatibilidad de Navegadores
+
+La aplicación es compatible con:
+- Chrome (últimas 2 versiones)
+- Firefox (últimas 2 versiones)
+- Safari (últimas 2 versiones)
+- Edge (últimas 2 versiones)
+
+## 📝 Licencia
+
+Ver archivo [LICENSE](LICENSE) para detalles.
+
+## 🔮 Mejoras Futuras
+
+- [ ] Desarrollo de aplicación móvil nativa (iOS/Android)
+- [ ] Integración con pasarelas de pago
+- [ ] Tours virtuales 360° con realidad virtual
+- [ ] Sistema de gestión de contenido (CMS) para administradores
+- [ ] Autenticación de usuarios completa
+- [ ] Soporte multiidioma
+- [ ] Notificaciones push
+- [ ] Integración con redes sociales
+- [ ] Sistema de analíticas y métricas
 
 ---
 
-**Última actualización:** Noviembre 2025
+**Tecnológico de Monterrey** - 2025
