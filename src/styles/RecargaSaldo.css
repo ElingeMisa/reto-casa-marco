@@ -1,0 +1,380 @@
+.recarga-saldo-page {
+  min-height: calc(100vh - 140px);
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  padding: 4rem 0;
+}
+
+.recarga-saldo-card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.card-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+}
+
+.card-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.saldo-actual {
+  background: #e3f2fd;
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.saldo-actual span {
+  font-size: 1rem;
+  color: #666;
+}
+
+.saldo-actual strong {
+  font-size: 1.8rem;
+  color: #2196f3;
+}
+
+.recarga-form {
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.montos-rapidos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.monto-btn {
+  padding: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.monto-btn:hover:not(:disabled) {
+  border-color: #4facfe;
+  background: #f0f9ff;
+  transform: translateY(-2px);
+}
+
+.monto-btn.selected {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  border-color: #4facfe;
+  transform: scale(1.05);
+}
+
+.monto-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.divider {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.divider span {
+  background: white;
+  padding: 0 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.monto-custom {
+  margin-top: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.input-group:focus-within {
+  border-color: #4facfe;
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.input-group .currency {
+  background: #f5f5f5;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+}
+
+.monto-custom small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.metodos-pago {
+  display: grid;
+  gap: 1rem;
+}
+
+.metodo {
+  display: block;
+  cursor: pointer;
+}
+
+.metodo input[type="radio"] {
+  display: none;
+}
+
+.metodo-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.metodo:hover .metodo-content {
+  border-color: #4facfe;
+  background: #f0f9ff;
+}
+
+.metodo.selected .metodo-content {
+  border-color: #4facfe;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+}
+
+.metodo-content .icon {
+  font-size: 2rem;
+}
+
+.metodo-content .name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.resumen {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+}
+
+.resumen-item.total {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid #333;
+  font-size: 1.2rem;
+}
+
+.resumen-item .highlight {
+  color: #28a745;
+  font-size: 1.5rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 1.5rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.security-note {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.security-note span {
+  font-size: 1.5rem;
+}
+
+.security-note p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.info-section {
+  padding: 2rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.info-section h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.info-section ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.info-section li {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.message {
+  margin: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+.message span {
+  font-size: 1.5rem;
+}
+
+.message p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  border-left: 4px solid #c33;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recarga-saldo-page {
+    padding: 2rem 1rem;
+  }
+
+  .card-header {
+    padding: 2rem 1rem;
+  }
+
+  .card-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .montos-rapidos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .saldo-actual {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .recarga-form {
+    padding: 1.5rem;
+  }
+}

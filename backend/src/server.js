@@ -11,6 +11,8 @@ const { helmetConfig, generalLimiter, sanitizeBody } = require('./middleware/sec
 const authRoutes = require('./routes/auth');
 const saldoRoutes = require('./routes/saldo');
 const ordenesRoutes = require('./routes/ordenes');
+const codigosRoutes = require('./routes/codigos');
+const recargasRoutes = require('./routes/recargas');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +46,8 @@ app.use(compression());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/saldo', saldoRoutes);
 app.use('/api/v1/ordenes', ordenesRoutes);
+app.use('/api/v1/codigos', codigosRoutes);
+app.use('/api/v1/recargas', recargasRoutes);
 
 // Ruta de health check
 app.get('/api/v1/health', (req, res) => {

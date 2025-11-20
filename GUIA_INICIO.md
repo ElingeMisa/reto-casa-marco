@@ -2,6 +2,27 @@
 
 Esta guía te ayudará a configurar y ejecutar todo el proyecto (Frontend + Backend) en tu máquina local.
 
+## ⚡ Inicio Rápido (si ya configuraste todo)
+
+Si ya tienes PostgreSQL corriendo y el backend configurado, simplemente ejecuta:
+
+```bash
+npm run dev
+```
+
+Este comando:
+1. ✅ Inicia el backend en puerto 5001
+2. ✅ Verifica que el backend esté funcionando correctamente
+3. ✅ Inicia el frontend en puerto 3000 automáticamente
+4. ✅ Muestra los logs en tiempo real
+
+Para detener todo:
+```bash
+npm run stop
+```
+
+---
+
 ## 📋 Prerrequisitos
 
 Asegúrate de tener instalado:
@@ -243,6 +264,14 @@ curl -X POST http://localhost:5001/api/v1/ordenes \
 **Nota:** En macOS, el puerto 5000 está ocupado por AirPlay Receiver. Por eso usamos el puerto 5001 para el backend.
 
 ## 🛠️ Comandos Útiles
+
+### Comandos Principales (desde la raíz del proyecto):
+```bash
+npm run dev           # ⚡ Iniciar backend + frontend automáticamente
+npm run stop          # 🛑 Detener todos los servicios
+npm run backend:stop  # Detener solo el backend
+npm run frontend:stop # Detener solo el frontend
+```
 
 ### Backend:
 ```bash

@@ -40,10 +40,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (tokenGuardado && usuarioGuardado) {
         try {
           setToken(tokenGuardado);
-          setUsuario(JSON.parse(usuarioGuardado));
+          const usuarioParsed = JSON.parse(usuarioGuardado);
+          // Asegurar que saldo sea un número
+          usuarioParsed.saldo = Number(usuarioParsed.saldo);
+          setUsuario(usuarioParsed);
 
           // Verificar que el token sigue siendo válido
           const perfil = await api.get<{ usuario: Usuario }>('/auth/perfil');
+          // Asegurar que saldo sea un número
+          perfil.usuario.saldo = Number(perfil.usuario.saldo);
           setUsuario(perfil.usuario);
         } catch (error) {
           // Token inválido, limpiar
@@ -67,6 +72,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         mensaje: string;
       }>('/auth/login', { email, password });
 
+      // Asegurar que saldo sea un número
+      response.usuario.saldo = Number(response.usuario.saldo);
+
       setToken(response.token);
       setUsuario(response.usuario);
 
@@ -85,6 +93,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         usuario: Usuario;
         mensaje: string;
       }>('/auth/registro', { nombre, email, password });
+
+      // Asegurar que saldo sea un número
+      response.usuario.saldo = Number(response.usuario.saldo);
 
       setToken(response.token);
       setUsuario(response.usuario);

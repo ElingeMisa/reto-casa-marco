@@ -10,6 +10,9 @@ import Visita from './pages/Visita';
 import Acerca from './pages/Acerca';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
+import CanjearCodigo from './pages/CanjearCodigo';
+import RecargaSaldo from './pages/RecargaSaldo';
+import RecargaExitosa from './pages/RecargaExitosa';
 import './styles/App.css';
 
 const App: React.FC = () => {
@@ -27,6 +30,9 @@ const App: React.FC = () => {
               <Route path="/acerca" element={<Acerca />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registro" element={<Registro />} />
+              <Route path="/canjear-codigo" element={<CanjearCodigo />} />
+              <Route path="/recarga" element={<RecargaSaldo />} />
+              <Route path="/recarga/exitosa" element={<RecargaExitosa />} />
             </Routes>
           </main>
           <Footer />

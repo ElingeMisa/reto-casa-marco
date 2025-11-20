@@ -16,6 +16,7 @@
     "security:audit": "npm audit --production",
     "security:snyk": "snyk test",
     "security:secrets": "gitleaks detect --source . -v",
+    "dev": "./start-services.sh",
     "backend:start": "cd backend && npm run dev",
     "backend:prod": "cd backend && npm start",
     "backend:stop": "lsof -ti:5001 | xargs kill -9 2>/dev/null || echo 'Backend no estaba corriendo'",

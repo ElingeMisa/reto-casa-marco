@@ -56,9 +56,19 @@ const Navbar: React.FC = () => {
           </li>
           {usuario ? (
             <>
+              <li>
+                <Link to="/recarga" className="nav-link" onClick={closeMenu}>
+                  💳 Recargar
+                </Link>
+              </li>
+              <li>
+                <Link to="/canjear-codigo" className="nav-link" onClick={closeMenu}>
+                  🎁 Códigos
+                </Link>
+              </li>
               <li className="user-info">
                 <span className="user-name">{usuario.nombre}</span>
-                <span className="user-balance">${usuario.saldo.toFixed(2)}</span>
+                <span className="user-balance">${Number(usuario.saldo).toFixed(2)}</span>
               </li>
               <li>
                 <button className="logout-button" onClick={handleLogout}>

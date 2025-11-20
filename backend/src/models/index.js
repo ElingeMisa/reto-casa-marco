@@ -1,6 +1,7 @@
 const Usuario = require('./Usuario');
 const Transaccion = require('./Transaccion');
 const Orden = require('./Orden');
+const CodigoPromocional = require('./CodigoPromocional');
 
 // Definir relaciones entre modelos
 Usuario.hasMany(Transaccion, {
@@ -33,8 +34,20 @@ Transaccion.belongsTo(Orden, {
   as: 'orden',
 });
 
+// Relaciones de CodigoPromocional
+Usuario.hasMany(CodigoPromocional, {
+  foreignKey: 'usado_por',
+  as: 'codigos_usados',
+});
+
+CodigoPromocional.belongsTo(Usuario, {
+  foreignKey: 'usado_por',
+  as: 'usuario',
+});
+
 module.exports = {
   Usuario,
   Transaccion,
   Orden,
+  CodigoPromocional,
 };

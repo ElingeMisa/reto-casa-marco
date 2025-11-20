@@ -95,6 +95,7 @@ reto-casa-marco/
 ### Prerrequisitos
 - Node.js >= 16.0.0
 - npm >= 8.0.0
+- PostgreSQL >= 12
 
 ### Instalación
 
@@ -105,26 +106,76 @@ git clone https://github.com/tu-usuario/reto-casa-marco.git
 # Navegar al directorio
 cd reto-casa-marco
 
-# Instalar dependencias
+# Instalar dependencias del frontend
 npm install
+
+# Instalar dependencias del backend
+cd backend
+npm install
+cd ..
+```
+
+### Configuración de la Base de Datos
+
+```bash
+# Crear la base de datos
+psql postgres -c "CREATE DATABASE museo_marco;"
+
+# Configurar el backend (ver GUIA_INICIO.md para detalles)
+cd backend
+cp .env.example .env
+# Editar .env con tus credenciales
+npm run db:setup
+npm run db:seed
+cd ..
 ```
 
 ### Ejecución en Desarrollo
 
+**Opción 1: Inicio Automático (Recomendado)**
 ```bash
-# Iniciar servidor de desarrollo
-npm start
+# Inicia backend + frontend automáticamente
+npm run dev
 
-# La aplicación se abrirá en http://localhost:3000
+# Este comando:
+# 1. Inicia el backend en puerto 5001
+# 2. Verifica que esté funcionando
+# 3. Inicia el frontend en puerto 3000
+# 4. Muestra logs en tiempo real
+```
+
+**Opción 2: Inicio Manual**
+```bash
+# Terminal 1 - Backend
+npm run backend:start
+
+# Terminal 2 - Frontend
+npm start
+```
+
+### Detener Servicios
+
+```bash
+# Detener todo (backend + frontend)
+npm run stop
+
+# Detener solo el backend
+npm run backend:stop
+
+# Detener solo el frontend
+npm run frontend:stop
 ```
 
 ### Construcción para Producción
 
 ```bash
-# Crear build optimizado
+# Crear build optimizado del frontend
 npm run build
 
 # El build estará en la carpeta /build
+
+# Iniciar backend en producción
+npm run backend:prod
 ```
 
 ### Scripts Disponibles

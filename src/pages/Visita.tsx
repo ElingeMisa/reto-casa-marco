@@ -52,8 +52,10 @@ const Visita: React.FC = () => {
       return;
     }
 
-    if (usuario.saldo < total) {
-      setError(`Saldo insuficiente. Tu saldo actual es $${usuario.saldo.toFixed(2)}. Necesitas recargar $${(total - usuario.saldo).toFixed(2)} más.`);
+    const saldoUsuario = Number(usuario.saldo);
+
+    if (saldoUsuario < total) {
+      setError(`Saldo insuficiente. Tu saldo actual es $${saldoUsuario.toFixed(2)}. Necesitas recargar $${(total - saldoUsuario).toFixed(2)} más.`);
       return;
     }
 
@@ -208,7 +210,7 @@ const Visita: React.FC = () => {
           <h2>Compra tus Boletos</h2>
           {usuario && (
             <div className="user-balance-info">
-              <p>Tu saldo actual: <strong>${usuario.saldo.toFixed(2)}</strong></p>
+              <p>Tu saldo actual: <strong>${Number(usuario.saldo).toFixed(2)}</strong></p>
             </div>
           )}
 
@@ -324,9 +326,9 @@ const Visita: React.FC = () => {
 
             <div className="total-section">
               <h3>Total: ${total.toFixed(2)}</h3>
-              {usuario && usuario.saldo < total && (
+              {usuario && Number(usuario.saldo) < total && (
                 <p className="insufficient-balance">
-                  Saldo insuficiente. Necesitas ${ (total - usuario.saldo).toFixed(2)} más
+                  Saldo insuficiente. Necesitas ${ (total - Number(usuario.saldo)).toFixed(2)} más
                 </p>
               )}
             </div>
@@ -334,7 +336,7 @@ const Visita: React.FC = () => {
             <button
               type="submit"
               className="submit-btn"
-              disabled={loading || !usuario || (usuario && usuario.saldo < total)}
+              disabled={loading || !usuario || (usuario && Number(usuario.saldo) < total)}
             >
               {loading ? 'Procesando...' : 'Comprar Boletos'}
             </button>

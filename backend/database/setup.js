@@ -4,7 +4,7 @@
  */
 
 const { sequelize } = require('../src/config/database');
-const { Usuario, Transaccion, Orden } = require('../src/models');
+const { Usuario, Transaccion, Orden, CodigoPromocional } = require('../src/models');
 
 const setup = async () => {
   try {
@@ -22,6 +22,43 @@ const setup = async () => {
     console.log('   - usuarios');
     console.log('   - transacciones');
     console.log('   - ordenes');
+    console.log('   - codigos_promocionales');
+
+    // Poblar códigos promocionales iniciales
+    console.log('\n📝 Poblando códigos promocionales...');
+    await CodigoPromocional.bulkCreate([
+      {
+        codigo: 'Ko4l4ps0',
+        monto: 500.00,
+        descripcion: 'Código especial de $500',
+      },
+      {
+        codigo: 'WELCOME100',
+        monto: 100.00,
+        descripcion: 'Bienvenida - $100',
+      },
+      {
+        codigo: 'MARCO50',
+        monto: 50.00,
+        descripcion: 'Código promocional - $50',
+      },
+      {
+        codigo: 'MUSEUM25',
+        monto: 25.00,
+        descripcion: 'Código museo - $25',
+      },
+      {
+        codigo: 'ART200',
+        monto: 200.00,
+        descripcion: 'Código arte - $200',
+      },
+      {
+        codigo: 'CULTURA75',
+        monto: 75.00,
+        descripcion: 'Código cultura - $75',
+      },
+    ]);
+    console.log('✅ Códigos promocionales creados');
 
     console.log('\n🎉 ¡Configuración completada!\n');
 
