@@ -46,8 +46,21 @@ Este proyecto es parte del curso TC3002C.101 Ciberseguridad Informática II del 
 - **HTTPS** - Comunicaciones cifradas
 - Implementación de principios de "Security by Design"
 
+### Backend
+- **Node.js 18** - Entorno de ejecución
+- **Express.js** - Framework web
+- **PostgreSQL 15** - Base de datos relacional
+- **Sequelize** - ORM para PostgreSQL
+- **Argon2** - Hashing seguro de contraseñas
+
+### DevOps & Contenedores
+- **Docker** - Contenedorización
+- **Docker Compose** - Orquestación de servicios
+- **nginx** - Servidor web para producción
+- **OWASP ZAP** - Auditoría de seguridad automatizada
+
 ### Herramientas de Desarrollo
-- **npm/yarn** - Gestión de dependencias
+- **npm** - Gestión de dependencias
 - **ESLint** - Análisis estático de código
 - **Prettier** - Formateo de código
 - **SonarCloud** - Análisis de calidad (CI/CD)
@@ -57,137 +70,134 @@ Este proyecto es parte del curso TC3002C.101 Ciberseguridad Informática II del 
 
 ```
 reto-casa-marco/
-├── public/
-│   ├── index.html
-│   └── manifest.json
-├── src/
-│   ├── components/
-│   │   ├── Navbar.tsx
-│   │   └── Footer.tsx
-│   ├── pages/
-│   │   ├── Inicio.tsx
-│   │   ├── Exposiciones.tsx
-│   │   ├── Colecciones.tsx
-│   │   ├── Visita.tsx
-│   │   └── Acerca.tsx
-│   ├── services/
-│   │   └── api.ts
-│   ├── types/
-│   │   └── index.ts
-│   ├── styles/
-│   │   ├── index.css
-│   │   ├── App.css
-│   │   └── [component].css
-│   ├── App.tsx
-│   └── index.tsx
-├── docs/
-│   ├── design/
-│   │   ├── Etapa 1. Requerimientos.pdf
-│   │   └── Etapa 2. Diseño.pdf
-│   └── README.md
-├── package.json
-├── tsconfig.json
-└── README.md
+├── src/                          # Frontend React
+│   ├── components/               # Componentes reutilizables
+│   ├── pages/                    # Páginas de la aplicación
+│   ├── contexts/                 # Contextos de React (Auth, etc.)
+│   ├── services/                 # Servicios API
+│   ├── styles/                   # Archivos CSS
+│   └── App.tsx                   # Componente principal
+├── backend/                      # Backend Node.js
+│   ├── src/
+│   │   ├── config/               # Configuración (DB, etc.)
+│   │   ├── controllers/          # Controladores de rutas
+│   │   ├── middleware/           # Middlewares (auth, security)
+│   │   ├── models/               # Modelos Sequelize
+│   │   ├── routes/               # Definición de rutas
+│   │   └── server.js             # Punto de entrada
+│   ├── database/                 # Scripts de BD
+│   └── Dockerfile                # Dockerfile del backend
+├── security/                     # Configuración de seguridad
+│   └── owasp-zap/                # Configuración OWASP ZAP
+│       ├── reports/              # Reportes de auditoría
+│       └── *.sh                  # Scripts de escaneo
+├── docs/                         # Documentación
+│   ├── GUIA_INICIO.md            # Guía de inicio rápido
+│   ├── SCRIPTS.md                # Documentación de scripts
+│   └── README.md                 # Este archivo
+├── Dockerfile                    # Dockerfile del frontend
+├── docker-compose.yml            # Orquestación principal
+├── docker-compose.security.yml   # Contenedores de seguridad
+├── nginx.conf                    # Configuración de nginx
+└── package.json                  # Dependencias del frontend
 ```
 
 ## 🚀 Instalación y Ejecución
 
 ### Prerrequisitos
+
+**Para Docker (Recomendado):**
+- Docker >= 20.0.0
+- Docker Compose >= 2.0.0
+
+**Para Desarrollo Local:**
 - Node.js >= 16.0.0
 - npm >= 8.0.0
 - PostgreSQL >= 12
 
-### Instalación
+### Opción 1: Ejecución con Docker (Recomendado)
 
 ```bash
 # Clonar el repositorio
 git clone https://github.com/tu-usuario/reto-casa-marco.git
-
-# Navegar al directorio
 cd reto-casa-marco
 
-# Instalar dependencias del frontend
-npm install
+# Construir e iniciar todos los servicios
+docker-compose up -d --build
 
-# Instalar dependencias del backend
-cd backend
-npm install
-cd ..
+# Ver logs
+docker-compose logs -f
+
+# Detener servicios
+docker-compose down
 ```
 
-### Configuración de la Base de Datos
+**Servicios disponibles:**
+| Servicio | URL |
+|----------|-----|
+| Frontend | http://localhost |
+| Backend API | http://localhost:5001 |
+| Health Check | http://localhost:5001/api/v1/health |
+
+### Opción 2: Ejecución Local (Sin Docker)
 
 ```bash
-# Crear la base de datos
-psql postgres -c "CREATE DATABASE museo_marco;"
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/reto-casa-marco.git
+cd reto-casa-marco
 
-# Configurar el backend (ver GUIA_INICIO.md para detalles)
+# Instalar dependencias
+npm install
+cd backend && npm install && cd ..
+
+# Configurar base de datos
+psql postgres -c "CREATE DATABASE museo_marco;"
 cd backend
 cp .env.example .env
 # Editar .env con tus credenciales
 npm run db:setup
-npm run db:seed
 cd ..
-```
 
-### Ejecución en Desarrollo
-
-**Opción 1: Inicio Automático (Recomendado)**
-```bash
-# Inicia backend + frontend automáticamente
+# Iniciar servicios
 npm run dev
-
-# Este comando:
-# 1. Inicia el backend en puerto 5001
-# 2. Verifica que esté funcionando
-# 3. Inicia el frontend en puerto 3000
-# 4. Muestra logs en tiempo real
 ```
 
-**Opción 2: Inicio Manual**
-```bash
-# Terminal 1 - Backend
-npm run backend:start
-
-# Terminal 2 - Frontend
-npm start
-```
-
-### Detener Servicios
+### Comandos Principales
 
 ```bash
-# Detener todo (backend + frontend)
-npm run stop
+# Docker
+docker-compose up -d --build    # Iniciar contenedores
+docker-compose down             # Detener contenedores
+docker-compose logs -f          # Ver logs
 
-# Detener solo el backend
-npm run backend:stop
+# Desarrollo Local
+npm run dev                     # Iniciar backend + frontend
+npm run stop                    # Detener servicios
+npm start                       # Solo frontend
+npm run backend:start           # Solo backend
 
-# Detener solo el frontend
-npm run frontend:stop
+# Build & Deploy
+npm run build                   # Build de producción
+npm run backend:prod            # Backend en producción
 ```
 
-### Construcción para Producción
+### Auditoría de Seguridad con OWASP ZAP
 
 ```bash
-# Crear build optimizado del frontend
-npm run build
+# Escaneo rápido (baseline)
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-baseline
 
-# El build estará en la carpeta /build
+# Escaneo completo
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-full
 
-# Iniciar backend en producción
-npm run backend:prod
+# Escaneo de API
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-api
+
+# UI interactiva (http://localhost:8080)
+docker compose -f docker-compose.yml -f docker-compose.security.yml up owasp-zap-ui
 ```
 
-### Scripts Disponibles
-
-```bash
-npm start          # Inicia servidor de desarrollo
-npm test          # Ejecuta pruebas con cobertura
-npm run build     # Construye para producción
-npm run lint      # Ejecuta ESLint
-npm run format    # Formatea código con Prettier
-npm run security:audit  # Auditoría de seguridad
-```
+Los reportes se generan en `security/owasp-zap/reports/`
 
 ## 🔒 Seguridad
 
@@ -245,11 +255,14 @@ Ver archivo [LICENSE](LICENSE) para detalles.
 
 ## 🔮 Mejoras Futuras
 
+- [x] ~~Autenticación de usuarios completa~~
+- [x] ~~Sistema de códigos promocionales~~
+- [x] ~~Contenedorización con Docker~~
+- [x] ~~Auditoría de seguridad con OWASP ZAP~~
 - [ ] Desarrollo de aplicación móvil nativa (iOS/Android)
-- [ ] Integración con pasarelas de pago
+- [ ] Integración con pasarelas de pago (Stripe)
 - [ ] Tours virtuales 360° con realidad virtual
 - [ ] Sistema de gestión de contenido (CMS) para administradores
-- [ ] Autenticación de usuarios completa
 - [ ] Soporte multiidioma
 - [ ] Notificaciones push
 - [ ] Integración con redes sociales

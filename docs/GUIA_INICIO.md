@@ -1,10 +1,32 @@
 # 🚀 Guía de Inicio Rápido - Museo MARCO
 
-Esta guía te ayudará a configurar y ejecutar todo el proyecto (Frontend + Backend) en tu máquina local.
+Esta guía te ayudará a configurar y ejecutar todo el proyecto (Frontend + Backend) en tu máquina local o mediante contenedores Docker.
 
-## ⚡ Inicio Rápido (si ya configuraste todo)
+## ⚡ Inicio Rápido
 
-Si ya tienes PostgreSQL corriendo y el backend configurado, simplemente ejecuta:
+### Opción 1: Con Docker (Recomendado)
+
+Si tienes Docker instalado, esta es la forma más rápida:
+
+```bash
+# Construir e iniciar todos los servicios
+docker-compose up -d --build
+
+# Ver logs
+docker-compose logs -f
+
+# Detener servicios
+docker-compose down
+```
+
+**Servicios disponibles:**
+- 🌐 **Frontend:** http://localhost
+- 🔌 **Backend API:** http://localhost:5001
+- 💾 **PostgreSQL:** localhost:5432
+
+### Opción 2: Sin Docker (Desarrollo Local)
+
+Si ya tienes PostgreSQL corriendo y el backend configurado:
 
 ```bash
 npm run dev
@@ -25,8 +47,11 @@ npm run stop
 
 ## 📋 Prerrequisitos
 
-Asegúrate de tener instalado:
+### Para Docker (Opción Recomendada):
+- ✅ **Docker** >= 20.0.0 ([Descargar](https://www.docker.com/products/docker-desktop/))
+- ✅ **Docker Compose** >= 2.0.0 (incluido con Docker Desktop)
 
+### Para Desarrollo Local (Sin Docker):
 - ✅ **Node.js** >= 16.0.0 ([Descargar](https://nodejs.org/))
 - ✅ **npm** >= 8.0.0 (viene con Node.js)
 - ✅ **PostgreSQL** >= 12 ([Descargar](https://www.postgresql.org/download/))
@@ -35,14 +60,122 @@ Asegúrate de tener instalado:
 ### Verificar instalaciones:
 
 ```bash
+# Docker
+docker --version        # Debe mostrar 20.0.0 o superior
+docker-compose --version # Debe mostrar 2.0.0 o superior
+
+# Desarrollo local
 node --version   # Debe mostrar v16.0.0 o superior
 npm --version    # Debe mostrar 8.0.0 o superior
 psql --version   # Debe mostrar PostgreSQL 12 o superior
 ```
 
-## 🗄️ Paso 1: Configurar PostgreSQL
+---
 
-### 1.1 Iniciar PostgreSQL
+## 🐳 Ejecución con Docker
+
+### Paso 1: Construir e Iniciar
+
+```bash
+# Construir e iniciar todos los contenedores
+docker-compose up -d --build
+
+# Ver el estado de los contenedores
+docker-compose ps
+```
+
+### Paso 2: Verificar los Servicios
+
+```bash
+# Ver logs de todos los servicios
+docker-compose logs -f
+
+# Ver logs de un servicio específico
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f postgres
+```
+
+### Paso 3: Acceder a la Aplicación
+
+| Servicio | URL |
+|----------|-----|
+| Frontend | http://localhost |
+| Backend API | http://localhost:5001 |
+| Health Check | http://localhost:5001/api/v1/health |
+
+### Comandos Útiles de Docker
+
+```bash
+# Detener todos los servicios
+docker-compose down
+
+# Detener y eliminar volúmenes (borra la base de datos)
+docker-compose down -v
+
+# Reiniciar un servicio específico
+docker-compose restart backend
+
+# Reconstruir sin caché
+docker-compose build --no-cache
+
+# Ver uso de recursos
+docker stats
+```
+
+### Códigos Promocionales Disponibles
+
+Los códigos se crean automáticamente al iniciar:
+
+| Código | Monto |
+|--------|-------|
+| `Ko4l4ps0` | $500 |
+| `WELCOME100` | $100 |
+| `MARCO50` | $50 |
+| `MUSEUM25` | $25 |
+| `ART200` | $200 |
+| `CULTURA75` | $75 |
+
+---
+
+## 🔒 Auditoría de Seguridad con OWASP ZAP
+
+El proyecto incluye contenedores de OWASP ZAP para auditorías de seguridad.
+
+### Ejecutar Escaneo Baseline (Rápido ~5 min)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-baseline
+```
+
+### Ejecutar Escaneo Completo (30-60 min)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-full
+```
+
+### Ejecutar Escaneo de API
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-api
+```
+
+### Modo Interactivo (UI Web)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.security.yml up owasp-zap-ui
+```
+Accede a la UI en: http://localhost:8080
+
+**Los reportes se guardan en:** `security/owasp-zap/reports/`
+
+---
+
+## 🗄️ Ejecución Local (Sin Docker)
+
+### Paso 1: Configurar PostgreSQL
+
+#### 1.1 Iniciar PostgreSQL
 
 **macOS (con Homebrew):**
 ```bash
@@ -257,15 +390,36 @@ curl -X POST http://localhost:5001/api/v1/ordenes \
 
 ## 📊 Resumen de Puertos
 
-- **Frontend (React):** http://localhost:3000
-- **Backend (API):** http://localhost:5001
-- **PostgreSQL:** localhost:5432
+### Con Docker:
+| Servicio | Puerto | URL |
+|----------|--------|-----|
+| Frontend (nginx) | 80 | http://localhost |
+| Backend (API) | 5001 | http://localhost:5001 |
+| PostgreSQL | 5432 | localhost:5432 |
+| OWASP ZAP UI | 8080 | http://localhost:8080 |
+
+### Sin Docker (Desarrollo Local):
+| Servicio | Puerto | URL |
+|----------|--------|-----|
+| Frontend (React) | 3000 | http://localhost:3000 |
+| Backend (API) | 5001 | http://localhost:5001 |
+| PostgreSQL | 5432 | localhost:5432 |
 
 **Nota:** En macOS, el puerto 5000 está ocupado por AirPlay Receiver. Por eso usamos el puerto 5001 para el backend.
 
 ## 🛠️ Comandos Útiles
 
-### Comandos Principales (desde la raíz del proyecto):
+### Docker:
+```bash
+docker-compose up -d --build    # 🐳 Construir e iniciar contenedores
+docker-compose down             # 🛑 Detener contenedores
+docker-compose down -v          # 🗑️ Detener y eliminar volúmenes
+docker-compose logs -f          # 📋 Ver logs en tiempo real
+docker-compose ps               # 📊 Ver estado de contenedores
+docker-compose restart backend  # 🔄 Reiniciar servicio específico
+```
+
+### Desarrollo Local (desde la raíz del proyecto):
 ```bash
 npm run dev           # ⚡ Iniciar backend + frontend automáticamente
 npm run stop          # 🛑 Detener todos los servicios
@@ -290,23 +444,60 @@ npm run build      # Crear build de producción
 npm test           # Ejecutar pruebas
 ```
 
+### Auditoría de Seguridad:
+```bash
+# Escaneo rápido (baseline)
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-baseline
+
+# Escaneo completo
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-full
+
+# Escaneo de API
+docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-api
+```
+
 ## ❌ Solución de Problemas
 
-### Error: "role 'postgres' does not exist"
+### Errores de Docker
+
+#### Error: "argon2.node: Exec format error"
+El binario de argon2 fue compilado para otra arquitectura. Solución:
+```bash
+docker-compose down
+docker-compose build --no-cache backend
+docker-compose up -d
+```
+
+#### Error: "The server does not support SSL connections"
+Cambia `NODE_ENV` a `development` en `docker-compose.yml`:
+```yaml
+environment:
+  NODE_ENV: development
+```
+
+#### Error: "npm ci - package-lock.json out of sync"
+```bash
+npm install  # Actualiza el lock file localmente
+docker-compose build --no-cache
+```
+
+### Errores de Desarrollo Local
+
+#### Error: "role 'postgres' does not exist"
 
 Crea el usuario de PostgreSQL:
 ```bash
 createuser -s postgres
 ```
 
-### Error: "database 'museo_marco' does not exist"
+#### Error: "database 'museo_marco' does not exist"
 
 Crea la base de datos manualmente:
 ```bash
 psql postgres -c "CREATE DATABASE museo_marco;"
 ```
 
-### Error: "ECONNREFUSED 127.0.0.1:5432"
+#### Error: "ECONNREFUSED 127.0.0.1:5432"
 
 PostgreSQL no está corriendo. Inícialo:
 ```bash
@@ -319,13 +510,13 @@ sudo service postgresql start
 # Windows - usar pgAdmin
 ```
 
-### Error: "Port 3000 is already in use"
+#### Error: "Port 3000 is already in use"
 
 Otro proceso está usando el puerto. Puedes:
 1. Matar el proceso: `lsof -ti:3000 | xargs kill`
 2. O usar otro puerto: `PORT=3001 npm start`
 
-### Error: "Port 5000 is already in use"
+#### Error: "Port 5000 is already in use"
 
 Cambia el puerto en `backend/.env`:
 ```env
