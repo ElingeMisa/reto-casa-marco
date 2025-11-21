@@ -51,3 +51,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  default:
+    name: museo_network
