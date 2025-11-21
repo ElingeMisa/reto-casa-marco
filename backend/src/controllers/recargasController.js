@@ -1,6 +1,6 @@
 const Usuario = require('../models/Usuario');
 const Transaccion = require('../models/Transaccion');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
 /**
  * Crear una recarga de saldo (simulada - sin Stripe por ahora)

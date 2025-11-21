@@ -91,7 +91,7 @@ const CanjearCodigo: React.FC = () => {
                 type="text"
                 id="codigo"
                 value={codigo}
-                onChange={(e) => setCodigo(e.target.value.toUpperCase())}
+                onChange={(e) => setCodigo(e.target.value)}
                 placeholder="Ej: MARCO50"
                 disabled={loading || !usuario}
                 maxLength={50}

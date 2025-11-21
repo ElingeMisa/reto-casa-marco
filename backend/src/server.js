@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const { sequelize, testConnection } = require('./config/database');
 const { helmetConfig, generalLimiter, sanitizeBody } = require('./middleware/security');
+const { Usuario, CodigoPromocional } = require('./models');
 
 // Importar rutas
 const authRoutes = require('./routes/auth');
@@ -83,6 +84,29 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json(errorResponse);
 });
 
+// Función para poblar datos iniciales
+const poblarDatosIniciales = async () => {
+  try {
+    // Verificar si ya existen códigos promocionales
+    const codigosExistentes = await CodigoPromocional.count();
+
+    if (codigosExistentes === 0) {
+      console.log('📝 Poblando códigos promocionales...');
+      await CodigoPromocional.bulkCreate([
+        { codigo: 'Ko4l4ps0', monto: 500.00, descripcion: 'Código especial - $500' },
+        { codigo: 'WELCOME100', monto: 100.00, descripcion: 'Bienvenida - $100' },
+        { codigo: 'MARCO50', monto: 50.00, descripcion: 'Código promocional - $50' },
+        { codigo: 'MUSEUM25', monto: 25.00, descripcion: 'Código museo - $25' },
+        { codigo: 'ART200', monto: 200.00, descripcion: 'Código arte - $200' },
+        { codigo: 'CULTURA75', monto: 75.00, descripcion: 'Código cultura - $75' },
+      ]);
+      console.log('✅ Códigos promocionales creados');
+    }
+  } catch (error) {
+    console.error('⚠️ Error al poblar datos iniciales:', error.message);
+  }
+};
+
 // Iniciar servidor
 const iniciarServidor = async () => {
   try {
@@ -93,6 +117,9 @@ const iniciarServidor = async () => {
     if (process.env.NODE_ENV === 'development') {
       await sequelize.sync({ alter: true });
       console.log('✅ Modelos sincronizados con la base de datos');
+
+      // Poblar datos iniciales si no existen
+      await poblarDatosIniciales();
     }
 
     // Iniciar servidor

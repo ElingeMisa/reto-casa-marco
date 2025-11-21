@@ -1,7 +1,7 @@
 const CodigoPromocional = require('../models/CodigoPromocional');
 const Usuario = require('../models/Usuario');
 const Transaccion = require('../models/Transaccion');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
 /**
  * Canjear un código promocional
