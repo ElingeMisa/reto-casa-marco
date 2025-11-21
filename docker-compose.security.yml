@@ -19,7 +19,7 @@ services:
     user: zap
     volumes:
       - ./security/owasp-zap/reports:/zap/reports:rw
-      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/wrk:/zap/wrk:rw
       - ./security/owasp-zap/scan-baseline.sh:/zap/scan.sh:ro
     environment:
       - TARGET_URL=http://frontend:80
@@ -38,7 +38,7 @@ services:
     user: zap
     volumes:
       - ./security/owasp-zap/reports:/zap/reports:rw
-      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/wrk:/zap/wrk:rw
       - ./security/owasp-zap/scan-full.sh:/zap/scan.sh:ro
     environment:
       - TARGET_URL=http://frontend:80
@@ -57,7 +57,7 @@ services:
     user: zap
     volumes:
       - ./security/owasp-zap/reports:/zap/reports:rw
-      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/wrk:/zap/wrk:rw
       - ./security/owasp-zap/scan-api.sh:/zap/scan.sh:ro
     environment:
       - API_URL=http://backend:5001/api/v1
@@ -78,7 +78,7 @@ services:
       - "8090:8090"
     volumes:
       - ./security/owasp-zap/reports:/zap/reports:rw
-      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/wrk:/zap/wrk:rw
     environment:
       - ZAP_PORT=8090
     command: ["zap-webswing.sh"]

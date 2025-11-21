@@ -27,6 +27,7 @@ yarn-error.log*
 lerna-debug.log*
 backend.log
 frontend.log
+owasp.log
 
 # Editor directories and files
 .idea
