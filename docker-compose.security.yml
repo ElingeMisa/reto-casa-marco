@@ -1,0 +1,93 @@
+# Docker Compose for OWASP Security Auditing
+# Extends the main docker-compose.yml to add security scanning capabilities
+#
+# Usage:
+#   Baseline scan (quick):
+#     docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-baseline
+#
+#   Full scan (comprehensive):
+#     docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-full
+#
+#   API scan:
+#     docker compose -f docker-compose.yml -f docker-compose.security.yml run --rm owasp-zap-api
+
+services:
+  # OWASP ZAP Baseline Scan - Quick passive scan
+  owasp-zap-baseline:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: museo_owasp_baseline
+    user: zap
+    volumes:
+      - ./security/owasp-zap/reports:/zap/reports:rw
+      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/scan-baseline.sh:/zap/scan.sh:ro
+    environment:
+      - TARGET_URL=http://frontend:80
+      - ZAP_PORT=8090
+    command: ["bash", "/zap/scan.sh"]
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - default
+
+  # OWASP ZAP Full Scan - Active security scan
+  owasp-zap-full:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: museo_owasp_full
+    user: zap
+    volumes:
+      - ./security/owasp-zap/reports:/zap/reports:rw
+      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/scan-full.sh:/zap/scan.sh:ro
+    environment:
+      - TARGET_URL=http://frontend:80
+      - ZAP_PORT=8091
+    command: ["bash", "/zap/scan.sh"]
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - default
+
+  # OWASP ZAP API Scan - Backend API security scan
+  owasp-zap-api:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: museo_owasp_api
+    user: zap
+    volumes:
+      - ./security/owasp-zap/reports:/zap/reports:rw
+      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+      - ./security/owasp-zap/scan-api.sh:/zap/scan.sh:ro
+    environment:
+      - API_URL=http://backend:5001/api/v1
+      - ZAP_PORT=8092
+    command: ["bash", "/zap/scan.sh"]
+    depends_on:
+      - backend
+    networks:
+      - default
+
+  # OWASP ZAP Interactive Mode - Manual testing via web UI
+  owasp-zap-ui:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: museo_owasp_ui
+    user: zap
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    volumes:
+      - ./security/owasp-zap/reports:/zap/reports:rw
+      - ./security/owasp-zap/zap-config.conf:/zap/wrk/gen.conf:ro
+    environment:
+      - ZAP_PORT=8090
+    command: ["zap-webswing.sh"]
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - default
+
+networks:
+  default:
+    name: museo_network
