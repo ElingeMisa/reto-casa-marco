@@ -15,6 +15,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - museo_network
 
   backend:
     build:
@@ -37,21 +39,53 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - museo_network
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: museo_frontend
+    environment:
+      REACT_APP_API_URL: http://localhost:5001
     ports:
-      - "80:80"
+      - "3000:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - museo_network
+
+  owasp-zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: museo_owasp_zap
+    user: zap
+    volumes:
+      - ./security/owasp-zap/reports:/zap/wrk:rw
+      - ./security/owasp-zap:/zap/config:ro
+    networks:
+      - museo_network
+    profiles:
+      - security
+    command: zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true
 
 volumes:
   postgres_data:
 
 networks:
-  default:
-    name: museo_network
+  museo_network:
+    driver: bridge

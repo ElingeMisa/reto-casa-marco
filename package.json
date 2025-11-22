@@ -22,7 +22,22 @@
     "backend:stop": "lsof -ti:5001 | xargs kill -9 2>/dev/null || echo 'Backend no estaba corriendo'",
     "frontend:stop": "lsof -ti:3000 | xargs kill -9 2>/dev/null || echo 'Frontend no estaba corriendo'",
     "stop": "npm run backend:stop && npm run frontend:stop",
-    "restart": "npm run stop && npm run start"
+    "restart": "npm run stop && npm run start",
+    "audit": "./audit.sh baseline",
+    "audit:baseline": "./audit.sh baseline",
+    "audit:api": "./audit.sh api",
+    "audit:full": "./audit.sh full",
+    "docker:start": "./docker-start.sh",
+    "docker:start:build": "./docker-start.sh --build",
+    "docker:stop": "docker-compose down",
+    "docker:restart": "docker-compose restart",
+    "docker:logs": "docker-compose logs -f",
+    "docker:audit": "./docker-audit.sh baseline frontend",
+    "docker:audit:frontend": "./docker-audit.sh baseline frontend",
+    "docker:audit:backend": "./docker-audit.sh baseline backend",
+    "docker:audit:full": "./docker-audit.sh full frontend",
+    "docker:ps": "docker-compose ps",
+    "docker:clean": "./docker-clean.sh"
   },
   "dependencies": {
     "@types/node": "^20.10.4",
