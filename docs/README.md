@@ -271,3 +271,4 @@ Ver archivo [LICENSE](LICENSE) para detalles.
 ---
 
 **Tecnológico de Monterrey** - 2025
+    
