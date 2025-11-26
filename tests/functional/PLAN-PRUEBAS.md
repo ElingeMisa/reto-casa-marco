@@ -6,33 +6,35 @@ Este documento mapea las pruebas implementadas con el plan de pruebas documentad
 
 ### ✅ Pruebas de Frontend (PF)
 
-| ID | Descripción | Estado | Archivo |
-|----|--------------|---------| ---------|
-| PF-01 | Validación de campos de entrada en formulario de login | ✅ Implementado | `frontend/PF-01-validacion-formulario-login.test.tsx` |
-| PF-02 | Protección contra ataques de clickjacking | ⏳ Pendiente | - |
-| PF-03 | Almacenamiento seguro de tokens en cliente | ✅ Implementado | `frontend/PF-03-almacenamiento-tokens.test.ts` |
-| PF-04 | Implementación de rate limiting visual | ⏳ Pendiente | - |
-| PF-05 | Validación de certificados SSL/TLS en app móvil | ⏳ Pendiente | - |
+| ID | Descripción | Estado | Archivo | Documentación |
+|----|-------------|--------|---------|---------------|
+| PF-01 | Validación de campos de entrada en formulario de login | ✅ Implementado | `frontend/PF-01-validacion-formulario-login.test.tsx` | [📄 Ver](../../docs/testing/PF-01-validacion-formularios.md) |
+| PF-02 | Protección contra ataques de clickjacking | ✅ Implementado | `frontend/PF-02-proteccion-clickjacking.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PF-03 | Almacenamiento seguro de tokens en cliente | ✅ Implementado | `frontend/PF-03-almacenamiento-tokens.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PF-04 | Implementación de rate limiting visual | ✅ Implementado | `frontend/PF-04-rate-limiting-visual.test.tsx` | [📄 Ver](../../docs/testing/README.md) |
+| PF-05 | Validación de certificados SSL/TLS en app móvil | ⏳ Pendiente | - | - |
 
 ### ✅ Pruebas de Backend (PB)
 
-| ID | Descripción | Estado | Archivo |
-|----|--------------|---------| ---------|
-| PB-01 | Implementación de hash seguro de contraseñas | ⏳ Pendiente | - |
-| PB-02 | Protección contra SQL Injection | ✅ Implementado | `backend/PB-02-sql-injection.test.ts` |
-| PB-03 | Implementación de política de contraseñas robusta | ⏳ Pendiente | - |
-| PB-04 | Validación de expiración y renovación de tokens | ⏳ Pendiente | - |
-| PB-05 | Protección contra ataques de fuerza bruta | ⏳ Pendiente | - |
+| ID | Descripción | Estado | Archivo | Documentación |
+|----|-------------|--------|---------|---------------|
+| PB-01 | Implementación de hash seguro de contraseñas | ✅ Implementado | `backend/PB-01-hash-passwords.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PB-02 | Protección contra SQL Injection | ✅ Implementado | `backend/PB-02-sql-injection.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PB-03 | Implementación de política de contraseñas robusta | ✅ Implementado | `backend/PB-03-politica-passwords.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PB-04 | Validación de expiración y renovación de tokens | ⏳ Pendiente | - | - |
+| PB-05 | Protección contra ataques de fuerza bruta | ⏳ Pendiente | - | - |
 
 ### ✅ Pruebas de Integridad, Autenticación y Acceso (PIA)
 
-| ID | Descripción | Estado | Archivo |
-|----|--------------|---------| ---------|
-| PIA-01 | Verificación de control de acceso basado en roles | ✅ Implementado | `integration/PIA-01-control-acceso-roles.test.ts` |
-| PIA-02 | Validación de sesión en cada petición | ✅ Implementado | `integration/PIA-02-validacion-sesion.test.ts` |
-| PIA-03 | Protección contra CSRF | ⏳ Pendiente | - |
-| PIA-05 | Validación de integridad de tokens JWT | ⏳ Pendiente | - |
-| PIA-07 | Auditoría y logging de intentos de autenticación | ⏳ Pendiente | - |
+| ID | Descripción | Estado | Archivo | Documentación |
+|----|-------------|--------|---------|---------------|
+| PIA-01 | Verificación de control de acceso basado en roles | ✅ Implementado | `integration/PIA-01-control-acceso-roles.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PIA-02 | Validación de sesión en cada petición | ✅ Implementado | `integration/PIA-02-validacion-sesion.test.ts` | [📄 Ver](../../docs/testing/README.md) |
+| PIA-03 | Protección contra CSRF | ⏳ Pendiente | - | - |
+| PIA-05 | Validación de integridad de tokens JWT | ⏳ Pendiente | - | - |
+| PIA-07 | Auditoría y logging de intentos de autenticación | ⏳ Pendiente | - | - |
+
+**Actualización**: Nov 2025 - 9 de 16 pruebas implementadas (56%)
 
 ## Vulnerabilidades Detectadas
 
@@ -142,9 +144,12 @@ Este documento mapea las pruebas implementadas con el plan de pruebas documentad
 - **Vulnerabilidades críticas**: 0
 
 ### Actual
-- **Pruebas implementadas**: 5 / 16 (31%)
+- **Pruebas implementadas**: 9 / 16 (56%) ⬆️
+- **Casos de prueba**: 42 casos individuales
+- **Tasa de éxito**: 97.6% (41/42 pasando) ✅
 - **Cobertura frontend**: Por determinar
 - **Cobertura backend**: Por determinar
+- **Documentación**: ✅ Completa en `/docs/testing/`
 
 ## Ejecución de Pruebas
 

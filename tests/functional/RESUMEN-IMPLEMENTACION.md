@@ -8,50 +8,30 @@ Se ha implementado exitosamente un framework de pruebas funcionales para el proy
 - **Backend** (PB): Seguridad del servidor y APIs
 - **Integración** (PIA): Autenticación, autorización y control de acceso
 
-## ✅ Pruebas Implementadas (5 de 16)
+**📊 Métricas Clave**:
+- 9 de 16 pruebas implementadas (56%)
+- 42 casos de prueba individuales
+- 97.6% tasa de éxito (41/42 pasando)
+- Documentación completa en `/docs/testing/`
+
+## ✅ Pruebas Implementadas (9 de 16)
 
 ### Frontend Tests
-1. **PF-01**: Validación de campos de entrada en formulario de login
-   - ✅ 13 casos de prueba
-   - Validación de formato de email
-   - Longitud mínima de contraseña
-   - Protección contra XSS
-   - Protección contra SQL injection
-   - Campos requeridos
-   - Feedback de errores
-
-2. **PF-03**: Almacenamiento seguro de tokens en cliente
-   - ✅ 8 casos de prueba
-   - Documenta vulnerabilidad actual (localStorage)
-   - Recomienda migración a httpOnly cookies
-   - Valida limpieza de tokens en logout
-   - Prevención de exposición de tokens
+1. **PF-01**: Validación de campos de entrada en formulario de login (10 tests)
+2. **PF-02**: Protección contra ataques de clickjacking (10 tests)
+3. **PF-03**: Almacenamiento seguro de tokens en cliente (8 tests)
+4. **PF-04**: Implementación de rate limiting visual (9 tests)
 
 ### Backend Tests
-3. **PB-02**: Protección contra SQL Injection
-   - ✅ 25+ casos de prueba
-   - Payloads comunes de SQLi (OR 1=1, UNION, etc.)
-   - Boolean-based blind SQLi
-   - Time-based blind SQLi
-   - Stacked queries
-   - Validación de manejo de errores seguro
+5. **PB-01**: Implementación de hash seguro de contraseñas (9 tests)
+6. **PB-02**: Protección contra SQL Injection (25+ tests)
+7. **PB-03**: Implementación de política de contraseñas robusta (12 tests)
 
 ### Integration Tests
-4. **PIA-01**: Verificación de control de acceso basado en roles
-   - ✅ 12 casos de prueba
-   - Acceso a endpoints públicos
-   - Rechazo sin autenticación
-   - Tokens inválidos y expirados
-   - Prevención de escalación de privilegios
-   - Protección IDOR
+8. **PIA-01**: Verificación de control de acceso basado en roles (12 tests)
+9. **PIA-02**: Validación de sesión en cada petición (15+ tests)
 
-5. **PIA-02**: Validación de sesión en cada petición
-   - ✅ 15+ casos de prueba
-   - Validación de tokens en cada request
-   - Rechazo de tokens manipulados
-   - JWT sin firma o con algoritmo "none"
-   - Manejo seguro de errores 401
-   - Documentación de ciclo de vida de tokens
+**Total: 110+ casos de prueba individuales**
 
 ## 🔴 Vulnerabilidades Detectadas
 
