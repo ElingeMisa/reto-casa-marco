@@ -42,7 +42,10 @@
     "test:functional:frontend": "./tests/functional/run-tests.sh frontend",
     "test:functional:backend": "./tests/functional/run-tests.sh backend",
     "test:functional:integration": "./tests/functional/run-tests.sh integration",
-    "test:functional:coverage": "./tests/functional/run-tests.sh coverage"
+    "test:functional:coverage": "./tests/functional/run-tests.sh coverage",
+    "test:functional:report": "./tests/functional/generate-reports.sh",
+    "test:all": "./run-all-tests.sh",
+    "verify": "./run-all-tests.sh"
   },
   "dependencies": {
     "@types/node": "^20.10.4",

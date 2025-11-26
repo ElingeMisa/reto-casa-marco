@@ -12,15 +12,38 @@ Aplicación web moderna para el Museo de Arte Contemporáneo de Monterrey (MARCO
 - ✅ Auditorías de seguridad con OWASP ZAP
 - ✅ **NUEVO: Suite completa de pruebas funcionales**
 
-## 🧪 Pruebas Funcionales
+## 🧪 Sistema de Pruebas
 
-El proyecto incluye una suite completa de pruebas funcionales basadas en el plan de pruebas documentado en `docs/design/pruebas de página.pdf`, alineadas con **OWASP Top 10**.
+El proyecto incluye una **suite completa de pruebas** que combina pruebas unitarias, funcionales y de seguridad, basadas en el plan de pruebas OWASP Top 10.
 
-### Ejecutar Pruebas
+### 🚀 Script Maestro (Recomendado)
 
 ```bash
-# Todas las pruebas funcionales
-npm run test:functional
+# Ejecutar TODAS las pruebas del proyecto
+npm run test:all
+# o
+npm run verify
+```
+
+**Esto ejecuta:**
+1. ✅ Pruebas unitarias (React + cobertura)
+2. ✅ Pruebas funcionales (Frontend + Backend + Integración)
+3. ✅ Auditoría de seguridad (npm audit)
+4. ✅ Lint y calidad de código (ESLint)
+
+**Genera:**
+- Reporte consolidado: `test-reports/consolidated-report-TIMESTAMP.md`
+- Dashboard de cobertura: `coverage/lcov-report/index.html`
+- Dashboard funcional: `tests/functional/reports/test-report-*.html`
+
+### 📊 Pruebas Individuales
+
+```bash
+# Pruebas unitarias
+npm test
+
+# Pruebas funcionales (todas con reportes)
+npm run test:functional:report
 
 # Solo frontend (no requiere backend)
 npm run test:functional:frontend
@@ -30,31 +53,33 @@ npm run test:functional:backend
 
 # Solo integración (requiere backend corriendo)
 npm run test:functional:integration
-
-# Con reporte de cobertura
-npm run test:functional:coverage
 ```
 
-### Pruebas Implementadas (5 de 16)
+### ✅ Pruebas Implementadas (9/16 - 56%)
 
-#### ✅ Frontend (PF)
-- **PF-01**: Validación de campos de entrada en formulario de login (13 tests)
-- **PF-03**: Almacenamiento seguro de tokens en cliente (8 tests)
+#### Frontend (PF)
+- **PF-01**: Validación de formularios (10 tests) - XSS, SQLi, validación HTML5
+- **PF-02**: Protección clickjacking (10 tests) - X-Frame-Options, CSP
+- **PF-03**: Almacenamiento seguro de tokens (8 tests) - localStorage vs httpOnly cookies
+- **PF-04**: Rate limiting visual (9 tests) - Intentos fallidos, CAPTCHA
 
-#### ✅ Backend (PB)
-- **PB-02**: Protección contra SQL Injection (25+ tests)
+#### Backend (PB)
+- **PB-01**: Hash de contraseñas (9 tests) - bcrypt, Argon2, salt
+- **PB-02**: Protección SQL Injection (25+ tests) - Prepared statements, sanitización
+- **PB-03**: Política de contraseñas (12 tests) - Complejidad, longitud, diccionario
 
-#### ✅ Integración (PIA)
-- **PIA-01**: Control de acceso basado en roles (12 tests)
-- **PIA-02**: Validación de sesión en cada petición (15+ tests)
+#### Integración (PIA)
+- **PIA-01**: Control de acceso por roles (12 tests) - RBAC, IDOR, privilege escalation
+- **PIA-02**: Validación de sesión (15+ tests) - JWT, expiración, manipulación
 
-**Total**: 73+ casos de prueba
+**Total**: 110+ casos de prueba
 
-### Documentación de Pruebas
+### 📚 Documentación Completa
 
-- [README General](tests/functional/README.md) - Visión general del sistema de pruebas
-- [Plan de Pruebas](tests/functional/PLAN-PRUEBAS.md) - Mapeo con el plan original
-- [Resumen de Implementación](tests/functional/RESUMEN-IMPLEMENTACION.md) - Estado y próximos pasos
+- **[Guía Completa de Tests](docs/testing/GUIA-COMPLETA-TESTS.md)** - ⭐ Todos los scripts explicados
+- [Guía de Reportes](docs/testing/GUIA-REPORTES.md) - Sistema de reportes automáticos
+- [Resumen Ejecutivo](docs/testing/RESUMEN-EJECUTIVO.md) - Métricas y KPIs
+- [Documentos Individuales](docs/testing/) - PF-01, PF-02, PB-01, etc.
 
 ### Vulnerabilidades Detectadas
 

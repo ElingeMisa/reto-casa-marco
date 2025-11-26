@@ -7,6 +7,7 @@ yarn.lock
 
 # Testing
 /coverage
+test-reports/
 
 # Producción
 /build

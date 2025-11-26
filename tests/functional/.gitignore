@@ -1,0 +1,10 @@
+# Reportes generados
+reports/
+coverage/
+
+# Outputs temporales
+*-output-*.txt
+*-jest-*.json
+
+# Archivos de respaldo
+*.bak
