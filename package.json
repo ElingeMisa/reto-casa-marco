@@ -37,7 +37,12 @@
     "docker:audit:backend": "./docker-audit.sh baseline backend",
     "docker:audit:full": "./docker-audit.sh full frontend",
     "docker:ps": "docker-compose ps",
-    "docker:clean": "./docker-clean.sh"
+    "docker:clean": "./docker-clean.sh",
+    "test:functional": "./tests/functional/run-tests.sh all",
+    "test:functional:frontend": "./tests/functional/run-tests.sh frontend",
+    "test:functional:backend": "./tests/functional/run-tests.sh backend",
+    "test:functional:integration": "./tests/functional/run-tests.sh integration",
+    "test:functional:coverage": "./tests/functional/run-tests.sh coverage"
   },
   "dependencies": {
     "@types/node": "^20.10.4",
@@ -53,18 +58,23 @@
     "web-vitals": "^3.5.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.1",
+    "@testing-library/user-event": "^14.6.1",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
+    "axios-mock-adapter": "^2.1.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "msw": "^2.12.3",
     "prettier": "^3.1.0",
     "snyk": "^1.1275.0",
-    "source-map-explorer": "^2.5.3"
+    "source-map-explorer": "^2.5.3",
+    "ts-jest": "^29.4.5"
   },
   "eslintConfig": {
     "extends": [
