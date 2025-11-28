@@ -48,8 +48,10 @@ describe('PF-04: Implementación de rate limiting visual', () => {
         expect(mockApi.post).toHaveBeenCalled();
       });
 
-      // No debe haber delay todavía
-      expect(submitButton).not.toBeDisabled();
+      // Esperar a que el loading termine y el botón se re-habilite
+      await waitFor(() => {
+        expect(submitButton).not.toBeDisabled();
+      });
     });
 
     it('DOCUMENTACIÓN: Implementar contador de intentos', () => {

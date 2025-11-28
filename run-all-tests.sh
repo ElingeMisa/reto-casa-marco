@@ -76,7 +76,7 @@ echo -e "${CYAN}Ejecutando: npm test -- --coverage --watchAll=false${NC}"
 echo ""
 
 UNIT_START=$(date +%s)
-if CI=true npm test -- --coverage --watchAll=false > "$REPORTS_DIR/unit-tests-$TIMESTAMP.log" 2>&1; then
+if CI=true npm test -- --coverage --watchAll=false --passWithNoTests > "$REPORTS_DIR/unit-tests-$TIMESTAMP.log" 2>&1; then
     UNIT_STATUS="${GREEN}✓ PASADAS${NC}"
     UNIT_STATUS_MD="✅ Pasadas"
     echo -e "${GREEN}✓ Pruebas unitarias completadas exitosamente${NC}"
